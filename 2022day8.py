@@ -8,12 +8,13 @@ with open('input.txt') as f:
     dp2 = [[[] for j in range(len(data))] for i in range(len(data))] #[right, bottom]
     dp[0][0] = [data[0][0], data[0][0]]
     dp2[H][W] = [data[-1][-1], data[-1][-1]]
+    
     for row in range(H+1):
         for col in range(W+1):
             if row == 0:
                 if col == 0:
                     continue
-                dp[row][col] = [10, data[row][col]]
+                dp[row][col] = [10, data[row][col]] # 10 is a placeholder as this value is never used
                 dp2[H-row][W-col] = [10, data[H-row][W-col]]
             elif col == 0:
                 dp[row][col] = [data[row][col], 10]
@@ -25,13 +26,13 @@ with open('input.txt') as f:
     for row in range(1, H):
         for col in range(1, W):
             valid = False
-            for i in range(2):
+            for i in range(2): # check left and top
                 if dp[row][col][i] < data[row][col]:
                     ans += 1
                     valid = True
                     break
             if not valid:
-                for i in range(2):
+                for i in range(2): # check right and bottom
                     if dp2[row][col][i] < data[row][col]:
                         ans += 1
                         break
