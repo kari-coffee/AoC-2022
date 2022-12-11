@@ -59,6 +59,7 @@ with open('input.txt') as f:
     #            [[79, 60, 97], [mul, None], 13, 1, 3],
     #            [[74], [add, 3], 17, 0 , 1]
     #            ]
+    lcm = reduce(mul, [i[2] for i in monkeys])
     for round in range(10000):
         for i, monkey in enumerate(monkeys):
             while monkey[0]:
@@ -67,6 +68,7 @@ with open('input.txt') as f:
                     new = reduce(monkey[1][0], [item, item])
                 else:
                     new = reduce(monkey[1][0], [item, monkey[1][1]])
+                new %= lcm
                 if new % monkey[2] == 0:
                     monkeys[monkey[3]][0].append(new)
                 else:
